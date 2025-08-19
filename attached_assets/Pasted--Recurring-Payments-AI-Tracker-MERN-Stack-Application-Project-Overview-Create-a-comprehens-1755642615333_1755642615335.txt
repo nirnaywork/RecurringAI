@@ -1,0 +1,185 @@
+# Recurring Payments AI Tracker - MERN Stack Application
+
+## Project Overview
+Create a comprehensive web application that helps users identify and manage recurring bank payments/subscriptions they may have forgotten about. The AI analyzes bank statements to detect recurring payments and sends monthly email reminders.
+
+## Tech Stack Requirements
+- **Frontend**: React.js
+- **Backend**: Node.js with Express.js
+- **Database**: MongoDB (local storage)
+- **Authentication**: Email/Password with OTP verification
+- **AI/ML**: Document processing for bank statement analysis
+- **Email Service**: For OTP verification and monthly reminders
+
+## Design Theme
+- **Color Scheme**: Claude AI inspired muted grey theme (avoid orange)
+- **UI/UX**: Minimal, clean interface with subtle hover transitions
+- **Responsive**: Mobile and desktop friendly
+
+## Authentication & Security
+1. **Landing Page**: Split layout - Left: Brief intro (2 lines + logo), Right: Login/Signup options
+2. **Email/Password Authentication**: Traditional registration and login system
+3. **OTP Verification**: Send verification code to registered email after signup
+4. **Email Validation**: Verify legitimate email addresses
+
+## Core Features & Pages
+
+### 1. Landing/Login Page
+- Split screen design (50/50)
+- Left: Company logo + brief 2-line description
+- Right: Login form (Email/Password) and "Sign Up" button with email registration
+- Clean, minimalist design
+
+### 2. Home Dashboard
+After successful authentication, display navigation to:
+- Reminders
+- Recurring Payments
+- Expenditure Breakdown
+- Your Uploads
+- About Us
+- FAQ
+
+### 3. Document Upload & AI Analysis
+- **File Support**: PDF, JPG, PNG bank statements
+- **Minimum Requirement**: 2+ months of statements for accurate recurring payment detection
+- **AI Processing**: Automatically read and analyze uploaded documents
+- **Detection Logic**: Identify payments that occur regularly (same merchant, similar amounts, consistent intervals)
+
+### 4. Reminders Feature
+- **Email Notifications**: Monthly automated emails to registered email address
+- **Customizable**: Users can set reminder frequency
+- **Content**: List of detected recurring payments with amounts and dates
+
+### 5. Recurring Payments Analysis
+- **Display**: Clear list of detected recurring subscriptions (Netflix, Adobe, etc.)
+- **Action Buttons**: "Stop Subscription" option for each payment
+- **Details**: Show payment frequency, amount, and merchant information
+- **Minimum Data**: Requires at least 2 months of bank statements
+
+### 6. Expenditure Breakdown
+- **Monthly Expenditure**: Categorized spending analysis
+- **Yearly Expenditure**: Annual financial overview
+- **Savings Analysis**: Recommendations on potential savings from cancelled subscriptions
+- **Visual Charts**: Graphs and charts for better understanding
+
+### 7. Your Uploads Section
+- **Upload History**: List of all uploaded bank statements
+- **Analysis Results**: Show AI-generated insights for each upload
+- **Download Reports**: Export analysis results
+
+### 8. About Us Page
+- Company mission and vision
+- How the AI detection works
+- Privacy and security information
+
+### 9. FAQ Page
+**Generate FAQ based on the following predicted questions:**
+
+**Q: How does the AI detect recurring payments?**
+A: Our AI analyzes your bank statements for patterns in merchant names, amounts, and payment frequencies to identify subscription services and recurring charges.
+
+**Q: What file formats are supported for bank statements?**
+A: We support PDF, JPG, and PNG formats for bank statement uploads.
+
+**Q: How many months of statements do I need to upload?**
+A: Minimum 2 months required for accurate recurring payment detection. More months provide better analysis.
+
+**Q: Is my banking information secure?**
+A: Yes, all data is stored locally on secure servers with encryption. We only analyze patterns, not store sensitive account details.
+
+**Q: How often will I receive reminder emails?**
+A: Monthly reminders are sent to your registered email address, with options to customize frequency.
+
+**Q: Can I stop subscriptions directly through the website?**
+A: The website identifies subscriptions and provides guidance, but you'll need to cancel directly with the service provider.
+
+## Database Schema (MongoDB)
+```javascript
+// User Collection
+{
+  _id: ObjectId,
+  email: String,
+  password: String (hashed),
+  isVerified: Boolean,
+  createdAt: Date,
+  lastLogin: Date,
+  otpCode: String,
+  otpExpiry: Date
+}
+
+// Uploads Collection
+{
+  _id: ObjectId,
+  userId: ObjectId,
+  fileName: String,
+  uploadDate: Date,
+  fileType: String,
+  analysisResults: Object
+}
+
+// RecurringPayments Collection
+{
+  _id: ObjectId,
+  userId: ObjectId,
+  merchantName: String,
+  amount: Number,
+  frequency: String,
+  lastPaymentDate: Date,
+  status: String (active/cancelled),
+  detectedDate: Date
+}
+
+// Reminders Collection
+{
+  _id: ObjectId,
+  userId: ObjectId,
+  frequency: String,
+  lastSent: Date,
+  isActive: Boolean
+}
+```
+
+## Technical Implementation Details
+
+### AI Document Processing
+- Use OCR for image-based statements
+- Text extraction and parsing algorithms
+- Pattern recognition for recurring transactions
+- Machine learning for merchant identification
+
+### Email Integration
+- SMTP configuration for email service
+- OTP generation and verification
+- Monthly reminder scheduling
+- Template-based email notifications
+
+### Security Features
+- JWT token authentication
+- Encrypted data storage
+- Rate limiting for uploads
+- Input validation and sanitization
+
+## UI/UX Specifications
+- **Navigation**: Clean, intuitive menu structure
+- **Loading States**: Progress indicators for AI analysis
+- **Error Handling**: User-friendly error messages
+- **Responsive Design**: Mobile-first approach
+- **Accessibility**: WCAG 2.1 compliance
+- **Animations**: Subtle hover effects and transitions
+
+## Deployment Notes
+- Local MongoDB setup instructions
+- Environment variables configuration
+- Email service configuration (SMTP settings)
+- File upload limits and storage management
+- Password hashing and security setup
+
+## Additional Features to Implement
+- Export functionality for reports
+- Data visualization with charts/graphs
+- Spending category classification
+- Budget recommendations
+- Multi-bank statement support
+- Subscription cost comparison tools
+
+Create a fully functional, production-ready application with all these features implemented using the MERN stack.
