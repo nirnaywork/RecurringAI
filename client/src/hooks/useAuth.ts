@@ -8,7 +8,7 @@ export function useAuth() {
 
   return {
     user,
-    isLoading,
-    isAuthenticated: !!user,
+    isLoading: false, // Always return false for loading in local mode
+    isAuthenticated: true, // Always return true for local mode
   };
 }

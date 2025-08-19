@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+// Removed database authentication - using simple local storage now
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -67,15 +67,23 @@ function simulateAIAnalysis(fileName: string): any {
   return mockResults;
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware
-  await setupAuth(app);
+// Simple demo user for local development
+const DEMO_USER = {
+  id: 'demo-user',
+  email: 'demo@example.com',
+  firstName: 'Demo',
+  lastName: 'User',
+  profileImageUrl: null,
+};
 
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+export async function registerRoutes(app: Express): Promise<Server> {
+  // Create demo user in storage
+  await storage.upsertUser(DEMO_USER);
+
+  // Auth routes - simplified for local development
+  app.get('/api/auth/user', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
+      const user = await storage.getUser(DEMO_USER.id);
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -84,9 +92,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Upload routes
-  app.post('/api/uploads', isAuthenticated, upload.array('files', 10), async (req: any, res) => {
+  app.post('/api/uploads', upload.array('files', 10), async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const files = req.files as any[];
       
       if (!files || files.length === 0) {
@@ -97,7 +105,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const uploadData = {
           userId,
           fileName: file.originalname,
-          fileType: file.mimetype,
+          filePath: file.path,
           fileSize: file.size,
           analysisStatus: "pending"
         };
@@ -122,8 +130,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   amount: payment.amount,
                   frequency: payment.frequency,
                   category: payment.category,
-                  uploadId: upload.id,
-                  status: "active"
+                  status: "active",
+                  confidence: payment.confidence
                 });
               }
             }, 3000);
@@ -144,9 +152,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/uploads', isAuthenticated, async (req: any, res) => {
+  app.get('/api/uploads', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const uploads = await storage.getUploadsByUserId(userId);
       res.json(uploads);
     } catch (error) {
@@ -156,9 +164,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Recurring payments routes
-  app.get('/api/recurring-payments', isAuthenticated, async (req: any, res) => {
+  app.get('/api/recurring-payments', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const payments = await storage.getRecurringPaymentsByUserId(userId);
       res.json(payments);
     } catch (error) {
@@ -167,7 +175,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch('/api/recurring-payments/:id/status', isAuthenticated, async (req: any, res) => {
+  app.patch('/api/recurring-payments/:id/status', async (req: any, res) => {
     try {
       const { id } = req.params;
       const { status } = req.body;
@@ -185,9 +193,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Reminder routes
-  app.get('/api/reminders', isAuthenticated, async (req: any, res) => {
+  app.get('/api/reminders', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const reminder = await storage.getReminderByUserId(userId);
       res.json(reminder || { userId, frequency: "monthly", sendTime: "first_day", isActive: true });
     } catch (error) {
@@ -196,9 +204,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/reminders', isAuthenticated, async (req: any, res) => {
+  app.post('/api/reminders', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const reminderData = { ...req.body, userId };
       
       const reminder = await storage.upsertReminder(reminderData);
@@ -209,9 +217,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/reminder-history', isAuthenticated, async (req: any, res) => {
+  app.get('/api/reminder-history', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const history = await storage.getReminderHistoryByUserId(userId);
       res.json(history);
     } catch (error) {
@@ -221,9 +229,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard stats
-  app.get('/api/dashboard/stats', isAuthenticated, async (req: any, res) => {
+  app.get('/api/dashboard/stats', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = DEMO_USER.id;
       const payments = await storage.getRecurringPaymentsByUserId(userId);
       
       const activePayments = payments.filter(p => p.status === 'active');
