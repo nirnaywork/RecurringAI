@@ -6,7 +6,6 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-green.svg)](https://mongodb.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://typescriptlang.org/)
 
-![AutoNomi Dashboard](https://via.placeholder.com/800x400/4F46E5/FFFFFF?text=AutoNomi+AI+Dashboard)
 An AI-powered subscription management platform that helps you track, analyze, and manage your recurring payments by analyzing bank statements. Take control of your finances and eliminate forgotten subscriptions that drain your bank account every month.
 
 ## 🎯 Problem Statement
