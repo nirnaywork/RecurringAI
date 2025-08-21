@@ -1,0 +1,1030 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecurringAI - Smart Subscription Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        'claude-gray': {
+                            50: '#F8F9FA',
+                            100: '#F3F4F6',
+                            200: '#E5E7EB',
+                            300: '#D1D5DB',
+                            400: '#9CA3AF',
+                            500: '#6B7280',
+                            600: '#4B5563',
+                            700: '#374151',
+                            800: '#1F2937',
+                            900: '#111827'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="font-inter bg-claude-gray-50 text-claude-gray-800">
+
+    <!-- @COMPONENT: LandingPage -->
+    <!-- Landing Page Section -->
+    <div id="landing-page" class="min-h-screen flex">
+        <!-- Left Side - Company Info -->
+        <div class="flex-1 bg-white flex flex-col justify-center px-8 lg:px-16">
+            <div class="max-w-md">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 bg-claude-gray-700 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-claude-gray-800">RecurringAI</h1>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-semibold text-claude-gray-900 mb-6 leading-tight">
+                    Discover hidden subscriptions with AI-powered analysis
+                </h2>
+                <p class="text-claude-gray-600 text-lg leading-relaxed">
+                    Never forget about recurring payments again. Our intelligent system analyzes your bank statements to identify forgotten subscriptions and sends monthly reminders.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side - Authentication -->
+        <div class="flex-1 bg-claude-gray-50 flex flex-col justify-center px-8 lg:px-16">
+            <div class="max-w-md w-full mx-auto">
+                <!-- Login Form -->
+                <div id="login-form" class="bg-white rounded-xl shadow-sm border border-claude-gray-200 p-8">
+                    <h3 class="text-2xl font-semibold text-claude-gray-900 mb-6">Sign In</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label class="block text-claude-gray-700 text-sm font-medium mb-2">Email</label>
+                            <input type="email" data-mock="true" placeholder="Enter your email" 
+                                   class="w-full px-4 py-3 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-claude-gray-700 text-sm font-medium mb-2">Password</label>
+                            <input type="password" data-mock="true" placeholder="Enter your password"
+                                   class="w-full px-4 py-3 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <button type="button" onclick="showDashboard()" 
+                                class="w-full bg-claude-gray-700 text-white py-3 rounded-lg font-medium hover:bg-claude-gray-800 transition-colors">
+                            Sign In
+                        </button>
+                    </form>
+                    <div class="mt-6 text-center">
+                        <p class="text-claude-gray-600">Don't have an account?</p>
+                        <button onclick="showSignupForm()" class="text-blue-600 font-medium hover:text-blue-700 transition-colors">Create Account</button>
+                    </div>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signup-form" class="bg-white rounded-xl shadow-sm border border-claude-gray-200 p-8 hidden">
+                    <h3 class="text-2xl font-semibold text-claude-gray-900 mb-6">Create Account</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label class="block text-claude-gray-700 text-sm font-medium mb-2">Email</label>
+                            <input type="email" data-mock="true" placeholder="Enter your email"
+                                   class="w-full px-4 py-3 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-claude-gray-700 text-sm font-medium mb-2">Password</label>
+                            <input type="password" data-mock="true" placeholder="Create a password"
+                                   class="w-full px-4 py-3 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-claude-gray-700 text-sm font-medium mb-2">Confirm Password</label>
+                            <input type="password" data-mock="true" placeholder="Confirm your password"
+                                   class="w-full px-4 py-3 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <button type="button" onclick="showOtpVerification()"
+                                class="w-full bg-claude-gray-700 text-white py-3 rounded-lg font-medium hover:bg-claude-gray-800 transition-colors">
+                            Create Account
+                        </button>
+                    </form>
+                    <div class="mt-6 text-center">
+                        <p class="text-claude-gray-600">Already have an account?</p>
+                        <button onclick="showLoginForm()" class="text-blue-600 font-medium hover:text-blue-700 transition-colors">Sign In</button>
+                    </div>
+                </div>
+
+                <!-- OTP Verification -->
+                <div id="otp-form" class="bg-white rounded-xl shadow-sm border border-claude-gray-200 p-8 hidden">
+                    <h3 class="text-2xl font-semibold text-claude-gray-900 mb-4">Verify Your Email</h3>
+                    <p class="text-claude-gray-600 mb-6">We've sent a verification code to your email address.</p>
+                    <form>
+                        <div class="mb-6">
+                            <label class="block text-claude-gray-700 text-sm font-medium mb-2">Verification Code</label>
+                            <input type="text" data-mock="true" placeholder="Enter 6-digit code" maxlength="6"
+                                   class="w-full px-4 py-3 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-center text-2xl font-mono tracking-widest">
+                        </div>
+                        <button type="button" onclick="showDashboard()"
+                                class="w-full bg-claude-gray-700 text-white py-3 rounded-lg font-medium hover:bg-claude-gray-800 transition-colors">
+                            Verify Email
+                        </button>
+                    </form>
+                    <div class="mt-6 text-center">
+                        <button class="text-blue-600 font-medium hover:text-blue-700 transition-colors">Resend Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: LandingPage -->
+
+    <!-- @COMPONENT: Dashboard -->
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden min-h-screen bg-claude-gray-50">
+        <!-- Header -->
+        <header class="bg-white border-b border-claude-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-claude-gray-700 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-brain text-white text-sm"></i>
+                    </div>
+                    <h1 class="text-xl font-semibold text-claude-gray-900">RecurringAI</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-claude-gray-500 hover:text-claude-gray-700 transition-colors">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-claude-gray-300 rounded-full"></div>
+                        <span class="text-claude-gray-700 font-medium" data-bind="user.email">john@example.com</span>
+                        <button onclick="showLandingPage()" class="text-claude-gray-500 hover:text-claude-gray-700 transition-colors">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex">
+            <!-- Sidebar Navigation -->
+            <nav class="w-64 bg-white border-r border-claude-gray-200 min-h-screen">
+                <div class="p-6">
+                    <ul class="space-y-2">
+                        <li>
+                            <button onclick="showSection('dashboard-overview')" 
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-home mr-3"></i>
+                                Dashboard
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="showSection('recurring-payments')"
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-repeat mr-3"></i>
+                                Recurring Payments
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="showSection('expenditure-breakdown')"
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-chart-pie mr-3"></i>
+                                Expenditure Breakdown
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="showSection('your-uploads')"
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-upload mr-3"></i>
+                                Your Uploads
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="showSection('reminders')"
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-envelope mr-3"></i>
+                                Reminders
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="showSection('about-us')"
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-info-circle mr-3"></i>
+                                About Us
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="showSection('faq')"
+                                    class="nav-item w-full flex items-center px-3 py-2 text-claude-gray-700 rounded-lg hover:bg-claude-gray-50 transition-colors">
+                                <i class="fas fa-question-circle mr-3"></i>
+                                FAQ
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6">
+                <!-- Dashboard Overview -->
+                <div id="dashboard-overview" class="section active">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">Welcome back!</h2>
+                        <p class="text-claude-gray-600">Here's your subscription overview for this month.</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-xl p-6 border border-claude-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-claude-gray-600 text-sm font-medium">Total Subscriptions</p>
+                                    <p class="text-2xl font-bold text-claude-gray-900" data-bind="stats.totalSubscriptions">12</p>
+                                </div>
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-repeat text-blue-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 border border-claude-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-claude-gray-600 text-sm font-medium">Monthly Cost</p>
+                                    <p class="text-2xl font-bold text-claude-gray-900" data-bind="stats.monthlyCost">$142.50</p>
+                                </div>
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-dollar-sign text-green-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 border border-claude-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-claude-gray-600 text-sm font-medium">Yearly Cost</p>
+                                    <p class="text-2xl font-bold text-claude-gray-900" data-bind="stats.yearlyCost">$1,710</p>
+                                </div>
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-calendar text-purple-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 border border-claude-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-claude-gray-600 text-sm font-medium">Potential Savings</p>
+                                    <p class="text-2xl font-bold text-emerald-600" data-bind="stats.potentialSavings">$35.99</p>
+                                </div>
+                                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-piggy-bank text-emerald-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-claude-gray-900 mb-4">Recent Subscriptions</h3>
+                            <!-- @MAP: recentSubscriptions.map(subscription => ( -->
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between" data-mock="true">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                            <i class="fab fa-netflix text-red-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-claude-gray-900">Netflix</p>
+                                            <p class="text-sm text-claude-gray-600">Monthly • Last charged 3 days ago</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold text-claude-gray-900">$15.99</span>
+                                </div>
+                                <div class="flex items-center justify-between" data-mock="true">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                            <i class="fab fa-spotify text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-claude-gray-900">Spotify Premium</p>
+                                            <p class="text-sm text-claude-gray-600">Monthly • Last charged 1 week ago</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold text-claude-gray-900">$9.99</span>
+                                </div>
+                                <div class="flex items-center justify-between" data-mock="true">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                                            <i class="fab fa-adobe text-orange-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-claude-gray-900">Adobe Creative Cloud</p>
+                                            <p class="text-sm text-claude-gray-600">Monthly • Last charged 2 weeks ago</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold text-claude-gray-900">$52.99</span>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-claude-gray-900 mb-4">Quick Upload</h3>
+                            <!-- Bank statement upload area depicting financial documents for analysis -->
+                            <div class="border-2 border-dashed border-claude-gray-300 rounded-lg p-6 text-center">
+                                <i class="fas fa-file-upload text-3xl text-claude-gray-400 mb-4"></i>
+                                <h4 class="text-lg font-medium text-claude-gray-900 mb-2">Upload Bank Statements</h4>
+                                <p class="text-claude-gray-600 mb-4">Drop your PDF, JPG, or PNG files here to analyze recurring payments</p>
+                                <button class="bg-claude-gray-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-claude-gray-800 transition-colors">
+                                    Choose Files
+                                </button>
+                                <input type="file" class="hidden" accept=".pdf,.jpg,.jpeg,.png" multiple data-implementation="Should handle file upload and processing">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recurring Payments Section -->
+                <div id="recurring-payments" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">Recurring Payments</h2>
+                        <p class="text-claude-gray-600">Manage your detected subscriptions and recurring charges.</p>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200 p-6 mb-6">
+                        <div class="flex flex-wrap gap-4">
+                            <select class="px-3 py-2 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Categories</option>
+                                <option>Entertainment</option>
+                                <option>Software</option>
+                                <option>News</option>
+                                <option>Fitness</option>
+                            </select>
+                            <select class="px-3 py-2 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Frequencies</option>
+                                <option>Monthly</option>
+                                <option>Yearly</option>
+                                <option>Weekly</option>
+                            </select>
+                            <select class="px-3 py-2 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Subscription List -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200">
+                        <div class="p-6 border-b border-claude-gray-200">
+                            <h3 class="text-lg font-semibold text-claude-gray-900">Your Subscriptions</h3>
+                        </div>
+                        <div class="divide-y divide-claude-gray-200">
+                            <!-- @MAP: subscriptions.map(subscription => ( -->
+                            <div class="p-6 hover:bg-claude-gray-50 transition-colors" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fab fa-netflix text-red-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-claude-gray-900">Netflix Premium</h4>
+                                            <p class="text-claude-gray-600">Entertainment • Monthly</p>
+                                            <p class="text-sm text-claude-gray-500">Next payment: Dec 15, 2024</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-right">
+                                            <p class="font-semibold text-claude-gray-900">$15.99</p>
+                                            <p class="text-sm text-claude-gray-600">per month</p>
+                                        </div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Active
+                                        </span>
+                                        <button class="text-red-600 hover:text-red-700 transition-colors" data-event="click:cancelSubscription">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 hover:bg-claude-gray-50 transition-colors" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fab fa-spotify text-blue-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-claude-gray-900">Spotify Premium</h4>
+                                            <p class="text-claude-gray-600">Music • Monthly</p>
+                                            <p class="text-sm text-claude-gray-500">Next payment: Dec 22, 2024</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-right">
+                                            <p class="font-semibold text-claude-gray-900">$9.99</p>
+                                            <p class="text-sm text-claude-gray-600">per month</p>
+                                        </div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Active
+                                        </span>
+                                        <button class="text-red-600 hover:text-red-700 transition-colors" data-event="click:cancelSubscription">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 hover:bg-claude-gray-50 transition-colors" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fab fa-adobe text-orange-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-claude-gray-900">Adobe Creative Cloud</h4>
+                                            <p class="text-claude-gray-600">Software • Monthly</p>
+                                            <p class="text-sm text-claude-gray-500">Next payment: Dec 8, 2024</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-right">
+                                            <p class="font-semibold text-claude-gray-900">$52.99</p>
+                                            <p class="text-sm text-claude-gray-600">per month</p>
+                                        </div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Active
+                                        </span>
+                                        <button class="text-red-600 hover:text-red-700 transition-colors" data-event="click:cancelSubscription">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expenditure Breakdown Section -->
+                <div id="expenditure-breakdown" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">Expenditure Breakdown</h2>
+                        <p class="text-claude-gray-600">Analyze your spending patterns and subscription costs.</p>
+                    </div>
+
+                    <!-- Time Period Selection -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200 p-6 mb-6">
+                        <div class="flex items-center space-x-4">
+                            <button class="px-4 py-2 bg-claude-gray-700 text-white rounded-lg font-medium">Monthly</button>
+                            <button class="px-4 py-2 text-claude-gray-700 hover:bg-claude-gray-100 rounded-lg font-medium transition-colors">Yearly</button>
+                            <button class="px-4 py-2 text-claude-gray-700 hover:bg-claude-gray-100 rounded-lg font-medium transition-colors">Custom Range</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Spending Chart -->
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-claude-gray-900 mb-4">Monthly Spending Trend</h3>
+                            <div class="h-64">
+                                <canvas id="spendingChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Category Breakdown -->
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-claude-gray-900 mb-4">Spending by Category</h3>
+                            <div class="h-64">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Breakdown -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-claude-gray-900 mb-4">Category Details</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-claude-gray-50 rounded-lg" data-mock="true">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-blue-500 rounded mr-3"></div>
+                                    <span class="font-medium text-claude-gray-900">Entertainment</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-claude-gray-900">$45.97</span>
+                                    <span class="text-sm text-claude-gray-600 ml-2">32%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-claude-gray-50 rounded-lg" data-mock="true">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-green-500 rounded mr-3"></div>
+                                    <span class="font-medium text-claude-gray-900">Software</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-claude-gray-900">$72.98</span>
+                                    <span class="text-sm text-claude-gray-600 ml-2">51%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-claude-gray-50 rounded-lg" data-mock="true">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-yellow-500 rounded mr-3"></div>
+                                    <span class="font-medium text-claude-gray-900">News & Media</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-claude-gray-900">$23.55</span>
+                                    <span class="text-sm text-claude-gray-600 ml-2">17%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Your Uploads Section -->
+                <div id="your-uploads" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">Your Uploads</h2>
+                        <p class="text-claude-gray-600">View and manage your uploaded bank statements and analysis results.</p>
+                    </div>
+
+                    <!-- Upload Area -->
+                    <!-- Bank statement upload interface for financial document processing -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200 p-8 mb-6">
+                        <div class="border-2 border-dashed border-claude-gray-300 rounded-lg p-8 text-center">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-claude-gray-400 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-claude-gray-900 mb-2">Upload Bank Statements</h3>
+                            <p class="text-claude-gray-600 mb-4">Upload PDF, JPG, or PNG files. Minimum 2 months required for accurate analysis.</p>
+                            <button class="bg-claude-gray-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-claude-gray-800 transition-colors">
+                                Choose Files
+                            </button>
+                            <input type="file" class="hidden" accept=".pdf,.jpg,.jpeg,.png" multiple data-implementation="Should handle file upload and AI processing">
+                            <p class="text-sm text-claude-gray-500 mt-2">Maximum file size: 10MB per file</p>
+                        </div>
+                    </div>
+
+                    <!-- Upload History -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200">
+                        <div class="p-6 border-b border-claude-gray-200">
+                            <h3 class="text-lg font-semibold text-claude-gray-900">Upload History</h3>
+                        </div>
+                        <div class="divide-y divide-claude-gray-200">
+                            <!-- @MAP: uploads.map(upload => ( -->
+                            <div class="p-6 hover:bg-claude-gray-50 transition-colors" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-file-pdf text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-claude-gray-900">Bank_Statement_Nov_2024.pdf</h4>
+                                            <p class="text-sm text-claude-gray-600">Uploaded Nov 28, 2024 • 2.3 MB</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i>
+                                            Processed
+                                        </span>
+                                        <button class="text-blue-600 hover:text-blue-700 transition-colors">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-claude-gray-500 hover:text-claude-gray-700 transition-colors">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-4 p-3 bg-claude-gray-50 rounded-lg">
+                                    <p class="text-sm text-claude-gray-700">
+                                        <strong>Analysis Results:</strong> Found 8 recurring payments totaling $127.45/month.
+                                        Detected Netflix, Spotify, Adobe Creative Cloud, and 5 other subscriptions.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="p-6 hover:bg-claude-gray-50 transition-colors" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-file-image text-orange-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-claude-gray-900">Bank_Statement_Oct_2024.jpg</h4>
+                                            <p class="text-sm text-claude-gray-600">Uploaded Nov 15, 2024 • 4.1 MB</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            <i class="fas fa-clock mr-1"></i>
+                                            Processing
+                                        </span>
+                                        <button class="text-claude-gray-400 cursor-not-allowed">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-claude-gray-500 hover:text-claude-gray-700 transition-colors">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reminders Section -->
+                <div id="reminders" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">Email Reminders</h2>
+                        <p class="text-claude-gray-600">Configure your subscription reminder preferences.</p>
+                    </div>
+
+                    <!-- Reminder Settings -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-claude-gray-900 mb-4">Reminder Settings</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-claude-gray-900">Email Reminders</h4>
+                                    <p class="text-sm text-claude-gray-600">Receive monthly emails about your subscriptions</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer" data-implementation="Should toggle email reminders">
+                                    <div class="w-11 h-6 bg-claude-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="block text-claude-gray-700 text-sm font-medium mb-2">Reminder Frequency</label>
+                                <select class="w-full px-3 py-2 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option>Monthly</option>
+                                    <option>Weekly</option>
+                                    <option>Bi-weekly</option>
+                                    <option>Quarterly</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-claude-gray-700 text-sm font-medium mb-2">Send Time</label>
+                                <select class="w-full px-3 py-2 border border-claude-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option>First day of month</option>
+                                    <option>Last day of month</option>
+                                    <option>15th of month</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="mt-4 bg-claude-gray-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-claude-gray-800 transition-colors" data-event="click:saveReminderSettings">
+                            Save Settings
+                        </button>
+                    </div>
+
+                    <!-- Recent Reminders -->
+                    <div class="bg-white rounded-xl border border-claude-gray-200">
+                        <div class="p-6 border-b border-claude-gray-200">
+                            <h3 class="text-lg font-semibold text-claude-gray-900">Recent Reminders</h3>
+                        </div>
+                        <div class="divide-y divide-claude-gray-200">
+                            <!-- @MAP: recentReminders.map(reminder => ( -->
+                            <div class="p-6" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-claude-gray-900">Monthly Subscription Reminder</h4>
+                                        <p class="text-sm text-claude-gray-600">Sent December 1, 2024 at 9:00 AM</p>
+                                        <p class="text-sm text-claude-gray-500 mt-1">Included 12 active subscriptions worth $142.50</p>
+                                    </div>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Delivered
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-6" data-mock="true">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-claude-gray-900">Monthly Subscription Reminder</h4>
+                                        <p class="text-sm text-claude-gray-600">Sent November 1, 2024 at 9:00 AM</p>
+                                        <p class="text-sm text-claude-gray-500 mt-1">Included 11 active subscriptions worth $138.51</p>
+                                    </div>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Delivered
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Us Section -->
+                <div id="about-us" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">About RecurringAI</h2>
+                        <p class="text-claude-gray-600">Learn more about our mission and how we help you manage subscriptions.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-8">
+                            <h3 class="text-xl font-semibold text-claude-gray-900 mb-4">Our Mission</h3>
+                            <p class="text-claude-gray-700 leading-relaxed mb-4">
+                                RecurringAI was created to solve a common problem: forgotten subscriptions that drain your bank account every month. 
+                                With the average person having 12+ active subscriptions, it's easy to lose track of recurring payments.
+                            </p>
+                            <p class="text-claude-gray-700 leading-relaxed">
+                                Our AI-powered platform analyzes your bank statements to identify patterns and detect recurring charges, 
+                                helping you regain control of your finances and save money by eliminating unwanted subscriptions.
+                            </p>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-8">
+                            <h3 class="text-xl font-semibold text-claude-gray-900 mb-4">How Our AI Works</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-file-upload text-blue-600 text-2xl"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-claude-gray-900 mb-2">1. Upload Statements</h4>
+                                    <p class="text-claude-gray-600">Upload your bank statements in PDF, JPG, or PNG format</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-brain text-green-600 text-2xl"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-claude-gray-900 mb-2">2. AI Analysis</h4>
+                                    <p class="text-claude-gray-600">Our AI identifies patterns in merchant names, amounts, and frequencies</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-bell text-purple-600 text-2xl"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-claude-gray-900 mb-2">3. Get Reminders</h4>
+                                    <p class="text-claude-gray-600">Receive monthly email reminders about your subscriptions</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200 p-8">
+                            <h3 class="text-xl font-semibold text-claude-gray-900 mb-4">Privacy & Security</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-shield-alt text-green-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-claude-gray-900">Local Data Storage</h4>
+                                        <p class="text-claude-gray-600">All your data is stored locally on secure servers with encryption</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-eye-slash text-green-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-claude-gray-900">Pattern Analysis Only</h4>
+                                        <p class="text-claude-gray-600">We analyze transaction patterns, not sensitive account details</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-trash text-green-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-claude-gray-900">Data Control</h4>
+                                        <p class="text-claude-gray-600">You can delete your data at any time from your account</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div id="faq" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-claude-gray-900 mb-2">Frequently Asked Questions</h2>
+                        <p class="text-claude-gray-600">Find answers to common questions about RecurringAI.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- @MAP: faqs.map(faq => ( -->
+                        <div class="bg-white rounded-xl border border-claude-gray-200" data-mock="true">
+                            <button class="w-full p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium text-claude-gray-900">How does the AI detect recurring payments?</h3>
+                                    <i class="fas fa-chevron-down text-claude-gray-500 transition-transform"></i>
+                                </div>
+                            </button>
+                            <div class="hidden px-6 pb-6">
+                                <p class="text-claude-gray-700">Our AI analyzes your bank statements for patterns in merchant names, amounts, and payment frequencies to identify subscription services and recurring charges. It looks for transactions that occur at regular intervals with consistent amounts.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200" data-mock="true">
+                            <button class="w-full p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium text-claude-gray-900">What file formats are supported for bank statements?</h3>
+                                    <i class="fas fa-chevron-down text-claude-gray-500 transition-transform"></i>
+                                </div>
+                            </button>
+                            <div class="hidden px-6 pb-6">
+                                <p class="text-claude-gray-700">We support PDF, JPG, and PNG formats for bank statement uploads. Our OCR technology can extract text from image-based statements as well as PDF documents.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200" data-mock="true">
+                            <button class="w-full p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium text-claude-gray-900">How many months of statements do I need to upload?</h3>
+                                    <i class="fas fa-chevron-down text-claude-gray-500 transition-transform"></i>
+                                </div>
+                            </button>
+                            <div class="hidden px-6 pb-6">
+                                <p class="text-claude-gray-700">Minimum 2 months required for accurate recurring payment detection. However, we recommend uploading 3-6 months of statements for better analysis and more comprehensive results.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200" data-mock="true">
+                            <button class="w-full p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium text-claude-gray-900">Is my banking information secure?</h3>
+                                    <i class="fas fa-chevron-down text-claude-gray-500 transition-transform"></i>
+                                </div>
+                            </button>
+                            <div class="hidden px-6 pb-6">
+                                <p class="text-claude-gray-700">Yes, all data is stored locally on secure servers with encryption. We only analyze transaction patterns, not store sensitive account details like account numbers or balances. Your privacy and security are our top priorities.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200" data-mock="true">
+                            <button class="w-full p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium text-claude-gray-900">How often will I receive reminder emails?</h3>
+                                    <i class="fas fa-chevron-down text-claude-gray-500 transition-transform"></i>
+                                </div>
+                            </button>
+                            <div class="hidden px-6 pb-6">
+                                <p class="text-claude-gray-700">Monthly reminders are sent to your registered email address by default, with options to customize frequency. You can choose weekly, bi-weekly, monthly, or quarterly reminders based on your preferences.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-claude-gray-200" data-mock="true">
+                            <button class="w-full p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium text-claude-gray-900">Can I stop subscriptions directly through the website?</h3>
+                                    <i class="fas fa-chevron-down text-claude-gray-500 transition-transform"></i>
+                                </div>
+                            </button>
+                            <div class="hidden px-6 pb-6">
+                                <p class="text-claude-gray-700">The website identifies subscriptions and provides guidance, but you'll need to cancel directly with the service provider. We provide links and contact information to make the cancellation process as easy as possible.</p>
+                            </div>
+                        </div>
+                        <!-- @END_MAP )) -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: Dashboard -->
+
+    <script>
+        // TODO: Implement actual authentication and business logic
+        
+        (function() {
+            // Navigation and section management
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.add('hidden');
+                    section.classList.remove('active');
+                });
+                
+                // Show selected section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                    targetSection.classList.add('active');
+                }
+
+                // Update navigation active state
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('bg-claude-gray-100');
+                });
+                event.target.classList.add('bg-claude-gray-100');
+
+                // Initialize charts if expenditure section is shown
+                if (sectionId === 'expenditure-breakdown') {
+                    setTimeout(initializeCharts, 100);
+                }
+            }
+
+            // Authentication form management
+            function showSignupForm() {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('signup-form').classList.remove('hidden');
+                document.getElementById('otp-form').classList.add('hidden');
+            }
+
+            function showLoginForm() {
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('signup-form').classList.add('hidden');
+                document.getElementById('otp-form').classList.add('hidden');
+            }
+
+            function showOtpVerification() {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('signup-form').classList.add('hidden');
+                document.getElementById('otp-form').classList.remove('hidden');
+            }
+
+            function showDashboard() {
+                document.getElementById('landing-page').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                
+                // Show dashboard overview by default
+                showSection('dashboard-overview');
+            }
+
+            function showLandingPage() {
+                document.getElementById('landing-page').classList.remove('hidden');
+                document.getElementById('dashboard').classList.add('hidden');
+                showLoginForm();
+            }
+
+            // FAQ toggle functionality
+            function toggleFaq(button) {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            }
+
+            // Chart initialization
+            function initializeCharts() {
+                // Spending trend chart
+                const spendingCtx = document.getElementById('spendingChart');
+                if (spendingCtx && !spendingCtx.chart) {
+                    spendingCtx.chart = new Chart(spendingCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            datasets: [{
+                                label: 'Monthly Spending',
+                                data: [120, 135, 142, 138, 145, 142],
+                                borderColor: '#3B82F6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        color: '#E5E7EB'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        color: '#E5E7EB'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Category pie chart
+                const categoryCtx = document.getElementById('categoryChart');
+                if (categoryCtx && !categoryCtx.chart) {
+                    categoryCtx.chart = new Chart(categoryCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Entertainment', 'Software', 'News & Media'],
+                            datasets: [{
+                                data: [32, 51, 17],
+                                backgroundColor: ['#3B82F6', '#10B981', '#F59E0B'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Make functions globally available
+            window.showSection = showSection;
+            window.showSignupForm = showSignupForm;
+            window.showLoginForm = showLoginForm;
+            window.showOtpVerification = showOtpVerification;
+            window.showDashboard = showDashboard;
+            window.showLandingPage = showLandingPage;
+            window.toggleFaq = toggleFaq;
+        })();
+    </script>
+
+</body>
+</html>

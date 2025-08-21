@@ -84,6 +84,51 @@ export default function Uploads() {
     },
   });
 
+  // Add delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (uploadId: string) => {
+      const response = await fetch(`/api/uploads/${uploadId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const contentType = response.headers.get("content-type");
+      if (!response.ok) {
+        // Try to get error message from JSON, fallback to text
+        let errorText = "";
+        if (contentType && contentType.includes("application/json")) {
+          const errJson = await response.json();
+          errorText = errJson.message || JSON.stringify(errJson);
+        } else {
+          errorText = await response.text();
+        }
+        throw new Error(`${response.status}: ${errorText}`);
+      }
+      // Only parse JSON if response is JSON
+      if (contentType && contentType.includes("application/json")) {
+        return response.json();
+      }
+      return {};
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/uploads"] });
+      toast({
+        title: "Deleted",
+        description: "Upload deleted successfully.",
+      });
+    },
+    onError: (error: any) => {
+      let msg = error.message || "Failed to delete upload";
+      if (msg.includes("<!DOCTYPE")) {
+        msg = "Server error or not found. Please check your backend.";
+      }
+      toast({
+        title: "Delete Failed",
+        description: msg,
+        variant: "destructive",
+      });
+    },
+  });
+
   useEffect(() => {
     if (error && isUnauthorizedError(error)) {
       toast({
@@ -131,11 +176,11 @@ export default function Uploads() {
   };
 
   const getFileIcon = (fileType: string) => {
-    if (fileType.includes('pdf')) {
-      return <FileText className="text-blue-600" />;
-    }
-    return <Image className="text-orange-600" />;
-  };
+  if (typeof fileType === "string" && fileType.includes("pdf")) {
+    return <FileText className="text-blue-600" />;
+  }
+  return <Image className="text-orange-600" />;
+};
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
@@ -219,7 +264,14 @@ export default function Uploads() {
                       <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
                         <Download className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-claude-gray-500 hover:text-claude-gray-700">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-claude-gray-500 hover:text-claude-gray-700"
+                        onClick={() => deleteMutation.mutate(upload.id)}
+                        disabled={deleteMutation.isPending}
+                        aria-label="Delete upload"
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>

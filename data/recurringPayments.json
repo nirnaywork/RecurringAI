@@ -1,0 +1,233 @@
+[
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "PlBaootVW0H8LsR1YyltU",
+    "detectedDate": "2025-08-19T23:19:41.967Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "o-COTDKxlas8qpxMnnPtm",
+    "detectedDate": "2025-08-19T23:19:41.969Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "cancelled",
+    "confidence": 0.88,
+    "id": "w_BteEmfaAPx_L-CT_Hpj",
+    "detectedDate": "2025-08-19T23:19:41.974Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "Mw0AQnIyAJ7dCOa8VybIb",
+    "detectedDate": "2025-08-19T23:23:01.750Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "ZeBfIdGkZlRVXT8GV4-tU",
+    "detectedDate": "2025-08-19T23:23:01.752Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "active",
+    "confidence": 0.88,
+    "id": "4ZMsHXieeLaUkxvDL668h",
+    "detectedDate": "2025-08-19T23:23:01.756Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "WK8Wxce2R28mcMrYDNLr2",
+    "detectedDate": "2025-08-20T02:35:37.163Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "UrLM00IBqKgf0BZIyinc1",
+    "detectedDate": "2025-08-20T02:35:37.168Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "cancelled",
+    "confidence": 0.88,
+    "id": "_IW3Yj21Lz_j5-Q3NNxL4",
+    "detectedDate": "2025-08-20T02:35:37.178Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "i4SoVIPZ4-ETODaJkxJdS",
+    "detectedDate": "2025-08-20T05:54:35.834Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "XhL0hgSlFNzY94fhM2aoV",
+    "detectedDate": "2025-08-20T05:54:35.836Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "active",
+    "confidence": 0.88,
+    "id": "MazboWqwC8Ugc9LfUwMwk",
+    "detectedDate": "2025-08-20T05:54:35.840Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "hUCZNZ5IjjS2Wlys07nZb",
+    "detectedDate": "2025-08-20T05:57:27.191Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "z9TARswHh2-rv3OD3bYyp",
+    "detectedDate": "2025-08-20T05:57:27.193Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "active",
+    "confidence": 0.88,
+    "id": "Vy4p0wYIdTqFppXrVhrtS",
+    "detectedDate": "2025-08-20T05:57:27.199Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "SdiF80pSiDp8oSDnTQRlZ",
+    "detectedDate": "2025-08-20T09:55:29.528Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "xIAj647i7ihdIAsos7P9f",
+    "detectedDate": "2025-08-20T09:55:29.530Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "cancelled",
+    "confidence": 0.88,
+    "id": "xRcUoXC59o56CdAYDTEul",
+    "detectedDate": "2025-08-20T09:55:29.532Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Netflix",
+    "amount": "15.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.95,
+    "id": "Ce66DTRGuXNb5rxYdYfq9",
+    "detectedDate": "2025-08-20T13:25:07.245Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Spotify Premium",
+    "amount": "9.99",
+    "frequency": "monthly",
+    "category": "entertainment",
+    "status": "active",
+    "confidence": 0.92,
+    "id": "a1UPaTo_0N56GJAzS7zYP",
+    "detectedDate": "2025-08-20T13:25:07.249Z"
+  },
+  {
+    "userId": "demo-user",
+    "merchantName": "Adobe Creative Cloud",
+    "amount": "52.99",
+    "frequency": "monthly",
+    "category": "software",
+    "status": "active",
+    "confidence": 0.88,
+    "id": "8-0hcgi6lV1FGi0wD2DOw",
+    "detectedDate": "2025-08-20T13:25:07.251Z"
+  }
+]
